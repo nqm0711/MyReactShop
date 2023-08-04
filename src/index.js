@@ -8,11 +8,12 @@ import {stripePromise} from "./utils/stripe/stripe.utils";
 import { UserProvider } from './contexts/user.context';
 import { CategoriesProvider } from './contexts/categories.context';
 import { CartProvider } from './contexts/cart.context';
+import {createRoot} from 'react-dom/client'
 import "./index.scss";
 
 const rootElement = document.getElementById("root");
-
-render(
+const root = createRoot(rootElement)
+root.render(
     <React.StrictMode>
         <BrowserRouter>
             <Elements stripe={stripePromise}>
@@ -25,6 +26,5 @@ render(
                 </UserProvider>
             </Elements>
         </BrowserRouter>
-    </React.StrictMode>,
-    rootElement
+    </React.StrictMode>
 );

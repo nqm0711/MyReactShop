@@ -8,12 +8,13 @@ import {Elements} from "@stripe/react-stripe-js";
 import App from "./App";
 import {persistor, store} from "./store/store";
 import {stripePromise} from "./utils/stripe/stripe.utils";
-
+import { createRoot } from 'react-dom/client'
 import "./index.scss";
 
 const rootElement = document.getElementById("root");
+const root = createRoot(rootElement)
 
-render(
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -25,5 +26,4 @@ render(
       </PersistGate>
     </Provider>
   </React.StrictMode>,
-  rootElement
 );

@@ -21,13 +21,6 @@ const composeEnhancer =
     window &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
   compose;
-
-// export const store = configureStore({
-//   reducer: rootReducer,
-//   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleWares),
-//   enhancers: [composeEnhancer],
-// });
-
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleWares),

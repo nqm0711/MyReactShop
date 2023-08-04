@@ -34,11 +34,7 @@ export const signInFailed = (error) =>
   createAction(USER_ACTION_TYPES.SIGN_IN_FAILED, error);
 
 export const signUpStart = (email, password, displayName) =>
-  createAction(USER_ACTION_TYPES.SIGN_UP_START, {
-    email,
-    password,
-    displayName,
-  });
+  createAction(USER_ACTION_TYPES.SIGN_UP_START, {email,password,displayName});
 
 export const signUpSuccess = (user, additionalDetails) =>
   createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user, additionalDetails });
@@ -68,12 +64,10 @@ export const signOutUserAsync = () => {
 
 export const signUpUserAsync = (email, password, displayName) => {
     return async (dispatch) => {
-        dispatch(signUpStart());
+        dispatch(signUpStart(email, password, displayName));
         try {
-            const { user } = createAuthUserWithEmailAndPassword(
-                email,
-                password
-            );
+            const { user } = await createAuthUserWithEmailAndPassword(email,password);
+            console.log(user)
             dispatch(signUpSuccess(user, { displayName }));
         } catch (error) {
             dispatch(signUpFailed(error));
@@ -98,10 +92,9 @@ export function signInWithEmailAsync(email, password) {
     return async (dispatch) => {
         dispatch(emailSignInStart(email, password))
         try {
-            const { user } = signInAuthUserWithEmailAndPassword(email,password);
+            const { user } = await signInAuthUserWithEmailAndPassword(email,password);
             const userSnapshot = await createUserDocumentFromAuth(user);
-            console.log(userSnapshot)
-            // dispatch(signInSuccess({id: userSnapshot.id, ...userSnapshot.data()}));
+            dispatch(signInSuccess({id: userSnapshot.id, ...userSnapshot.data()}));
         } catch (error) {
             dispatch(signInFailed(error));
         }

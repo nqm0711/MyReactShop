@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import {Route, Routes, useNavigate} from 'react-router-dom';
 
@@ -8,7 +8,6 @@ import Navigation from './routes/navigation/navigation.component';
 import Authentication from './routes/authentication/authentication.component';
 import Shop from './routes/shop/shop.component';
 import Checkout from './routes/checkout/checkout.component';
-import {checkUserSession} from './store/user/user.action';
 import {selectCurrentUser} from "./store/user/user.selector";
 
 export const currencyFormatter = (number,locale,currency) => {
@@ -16,18 +15,12 @@ export const currencyFormatter = (number,locale,currency) => {
 }
 
 const App = () => {
-  const navi = useNavigate()
+  const navigate = useNavigate()
   const currentUser = useSelector(selectCurrentUser);
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(checkUserSession());
-  // }, []);
 
   useEffect(() => {
-    navi("/")
+    navigate("/")
   }, [currentUser]);
-
 
   return (
     <Routes>

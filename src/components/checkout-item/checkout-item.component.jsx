@@ -15,12 +15,11 @@ import {
 import {currencyFormatter} from "../../App";
 
 const CheckoutItem = ({ cartItem }) => {
-  const { name, image: image, price, quantity } = cartItem;
+  const { name, image, price, quantity } = cartItem;
   const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
 
-  const clearItemHandler = () =>
-    dispatch(clearItemFromCart(cartItems, cartItem));
+  const clearItemHandler = () => dispatch(clearItemFromCart(cartItems, cartItem));
   const addItemHandler = () => dispatch(addItemToCart(cartItems, cartItem));
   const removeItemHandler = () =>
     dispatch(removeItemFromCart(cartItems, cartItem));

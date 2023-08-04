@@ -6,7 +6,6 @@ import Button, {BUTTON_TYPE_CLASSES} from '../button/button.component';
 
 import {ButtonsContainer, SignInContainer} from './sign-in-form.styles';
 import {emailSignInStart, googleSignInStart,} from '../../store/user/user.action';
-import {useNavigate} from "react-router-dom";
 
 const defaultFormFields = {
   email: '',

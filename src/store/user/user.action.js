@@ -1,5 +1,10 @@
 import {USER_ACTION_TYPES} from './user.types';
 import {createAction} from '../../utils/reducer/reducer.utils';
+import {
+    createAuthUserWithEmailAndPassword, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword,
+    signInWithGooglePopup,
+    signOutUser
+} from "../../utils/firebase/firebase.utils";
 
 export const setCurrentUser = (user) =>
   createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user);
@@ -49,3 +54,56 @@ export const signOutSuccess = () =>
 
 export const signOutFailed = (error) =>
   createAction(USER_ACTION_TYPES.SIGN_OUT_FAILED, error);
+export const signOutUserAsync = () => {
+    return async (dispatch) => {
+        dispatch(signOutStart());
+        try {
+            await signOutUser();
+            dispatch(signOutSuccess());
+        } catch (error) {
+            dispatch(signOutFailed(error));
+        }
+    };
+};
+
+export const signUpUserAsync = (email, password, displayName) => {
+    return async (dispatch) => {
+        dispatch(signUpStart());
+        try {
+            const { user } = createAuthUserWithEmailAndPassword(
+                email,
+                password
+            );
+            dispatch(signUpSuccess(user, { displayName }));
+        } catch (error) {
+            dispatch(signUpFailed(error));
+        }
+    };
+};
+
+export function signInWithGoogleAsync() {
+    return async (dispatch) => {
+        dispatch(googleSignInStart())
+        try {
+            const {user} = await signInWithGooglePopup();
+            const userSnapshot = await createUserDocumentFromAuth(user);
+            dispatch(signInSuccess({id: userSnapshot.id, ...userSnapshot.data()}));
+        } catch (error) {
+            dispatch(signInFailed(error));
+        }
+    }
+}
+
+export function signInWithEmailAsync(email, password) {
+    return async (dispatch) => {
+        dispatch(emailSignInStart(email, password))
+        try {
+            const { user } = signInAuthUserWithEmailAndPassword(email,password);
+            const userSnapshot = await createUserDocumentFromAuth(user);
+            console.log(userSnapshot)
+            // dispatch(signInSuccess({id: userSnapshot.id, ...userSnapshot.data()}));
+        } catch (error) {
+            dispatch(signInFailed(error));
+        }
+    }
+}

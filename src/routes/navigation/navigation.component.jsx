@@ -7,7 +7,7 @@ import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component
 
 import {selectIsCartOpen} from '../../store/cart/cart.selector';
 import {selectCurrentUser} from '../../store/user/user.selector';
-import {signOutStart} from '../../store/user/user.action';
+import {signOutUserAsync} from '../../store/user/user.action';
 
 import {ReactComponent as Logo} from '../../assets/logo.svg';
 
@@ -18,7 +18,7 @@ const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen);
 
-  const signOutUser = () => dispatch(signOutStart());
+  const signOutUser = () => dispatch(signOutUserAsync());
 
   return (
     <Fragment>

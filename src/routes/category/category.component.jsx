@@ -10,30 +10,30 @@ import {selectCategoriesIsLoading, selectCategoriesMap,} from '../../store/categ
 import {CategoryContainer, Title} from './category.styles';
 
 const Category = () => {
-  const { category } = useParams();
-  const categoriesMap = useSelector(selectCategoriesMap);
-  const isLoading = useSelector(selectCategoriesIsLoading);
-  const [products, setProducts] = useState(categoriesMap[category]);
+    const {category} = useParams();
+    const categoriesMap = useSelector(selectCategoriesMap);
+    const isLoading = useSelector(selectCategoriesIsLoading);
+    const [products, setProducts] = useState(categoriesMap[category]);
 
-  useEffect(() => {
-    setProducts(categoriesMap[category]);
-  }, [category, categoriesMap]);
+    useEffect(() => {
+        setProducts(categoriesMap[category]);
+    }, [category, categoriesMap]);
 
-  return (
-    <Fragment>
-      <Title>{category.toUpperCase()}</Title>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <CategoryContainer>
-          {products &&
-            products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-        </CategoryContainer>
-      )}
-    </Fragment>
-  );
+    return (
+        <Fragment>
+            <Title>{category.toUpperCase()}</Title>
+            {isLoading ? (
+                <Spinner/>
+            ) : (
+                <CategoryContainer>
+                    {products &&
+                        products.map((product) => (
+                            <ProductCard key={product.id} product={product}/>
+                        ))}
+                </CategoryContainer>
+            )}
+        </Fragment>
+    );
 };
 
 export default Category;
